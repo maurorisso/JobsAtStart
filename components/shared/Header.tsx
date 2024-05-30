@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { Briefcase } from "lucide-react";
 
 type Props = {};
 
@@ -57,7 +58,7 @@ function Header({}: Props) {
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <nav className="flex items-center gap-2">
             <Button variant="link"> Browse Jobs</Button>
-            <Button>Post a Job</Button>
+            <Button className="">Post a Job</Button>
           </nav>
         </div>
       </div>

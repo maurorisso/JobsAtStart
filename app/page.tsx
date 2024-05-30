@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className=" mx-auto  flex flex-col gap-10">
+    <main className=" mx-auto  flex flex-col gap-10  ">
       <HeroSection />
       <BoardSection />
     </main>

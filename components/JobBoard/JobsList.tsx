@@ -1,11 +1,12 @@
 import React from "react";
 import JobItem from "./JobItem";
 import Vercel from "/public/vercel.svg";
+import { Accordion } from "../ui/accordion";
 type Props = {};
 
 function JobsList({}: Props) {
   return (
-    <div className="flex flex-1">
+    <Accordion type="single" collapsible className="flex flex-1 w-full">
       <JobItem
         title="Frontend Developer"
         company="Google"
@@ -19,7 +20,7 @@ function JobsList({}: Props) {
         logo={Vercel}
         tags={["frontend", "react", "javascript"]}
       />
-    </div>
+    </Accordion>
   );
 }
 
