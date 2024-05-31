@@ -1,4 +1,5 @@
 import React from "react";
+import Vercel from "/public/vercel.svg";
 import Link from "next/link";
 import {
   Tooltip,
@@ -38,22 +39,22 @@ function JobItem({
   tags,
   sector,
 }: Job) {
-  function formatDate(dateString) {
+  function formatDate(dateString: string) {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(
       date
     );
   }
 
-  function DateDisplay({ date }) {
+  function DateDisplay(date: string) {
     return <div className="mt-5 text-sm">Posted on {formatDate(date)}</div>;
   }
 
   return (
     <AccordionItem value="item-1" className="w-full">
       <Card className="flex p-5 flex-1 w-full">
-        <CardHeader className=" flex items-center justify-center ">
-          {/* <Image width={200} height={200} src={logo} alt="company logo" /> */}
+        <CardHeader className=" flex items-center justify-center  bg-white rounded-xl">
+          <Image width={200} height={200} src={Vercel} alt="company logo" />
         </CardHeader>
         <CardContent className="flex-1">
           <AccordionTrigger className="">
@@ -69,7 +70,6 @@ function JobItem({
             <div>{location}</div>
             <span>-</span>
             <p>{type}</p>
-            <p>{apply_url}</p>
           </div>
 
           <AccordionContent>
