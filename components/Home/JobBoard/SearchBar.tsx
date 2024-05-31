@@ -11,7 +11,6 @@ function SearchBar({}: Props) {
     <div className="flex items-center space-x-2">
       <Input type="text" placeholder="Job title or keyword " />
 
-      <ComboboxDemo />
       <Button type="submit">Add a new Job</Button>
     </div>
   );

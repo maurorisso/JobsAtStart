@@ -6,9 +6,11 @@ import SearchBar from "./SearchBar";
 type Props = {};
 
 async function BoardSection({}: Props) {
-
   return (
-    <div className="flex flex-col  justify-center items-center w-full  gap-10 bg-background/75  ">
+    <div
+  
+      className="flex flex-col  justify-center items-center w-full  gap-10 bg-background/75  "
+    >
       <h1 className=" text-3xl font-bold mt-10  flex justify-center items-center gap-1 ">
         Job Board
       </h1>
@@ -21,7 +23,7 @@ async function BoardSection({}: Props) {
         "
         >
           <Filters />
-          <JobsList />
+          <JobsList  />
         </div>
       </div>
     </div>

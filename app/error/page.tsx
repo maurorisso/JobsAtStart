@@ -1,3 +1,7 @@
 export default function ErrorPage() {
-  return <p>Sorry, something went wrong</p>;
+  return (
+    <div className=" w-screen   flex  justify-center mt-40 overflow-hidden">
+      <p className="text-xl">Sorry, something went wrong 😔</p>
+    </div>
+  );
 }
