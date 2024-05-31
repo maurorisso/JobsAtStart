@@ -7,16 +7,14 @@ function Fitlers({}: Props) {
     <div className="w-[200px]">
       <div>
         <h2>Filters</h2>
-        {/* placehodlder for job filters */}
-<div>
-  <h3>Job Type</h3>
-  <ul>
-    <li>Full Time</li>
-    <li>Part Time</li>
-    <li>Remote</li>
-  </ul>
-  
-</div>
+        <div>
+          <h3>Job Type</h3>
+          <ul>
+            <li>Full Time</li>
+            <li>Part Time</li>
+            <li>Remote</li>
+          </ul>
+        </div>
       </div>
     </div>
   );

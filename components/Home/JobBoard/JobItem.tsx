@@ -23,21 +23,7 @@ import {
 } from "@/components/ui/accordion";
 
 import { Button } from "@/components/ui/button";
-type Props = {
-  title: string;
-  company: string;
-  location: string;
-  salary?: string;
-  type: string;
-  date: string;
-  description: string;
-  applyLink: string;
-  logo: string;
-  tags: string[];
-  sector: sector;
-};
-
-type sector = "Business" | "Tech" | "VC" | "Marketing" | "Sales" | "Other";
+import { Job } from "@/types/index";
 
 function JobItem({
   title,
@@ -47,16 +33,27 @@ function JobItem({
   type,
   date,
   description,
-  applyLink,
+  apply_url,
   logo,
   tags,
   sector,
-}: Props) {
+}: Job) {
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(
+      date
+    );
+  }
+
+  function DateDisplay({ date }) {
+    return <div className="mt-5 text-sm">Posted on {formatDate(date)}</div>;
+  }
+
   return (
     <AccordionItem value="item-1" className="w-full">
       <Card className="flex p-5 flex-1 w-full">
         <CardHeader className=" flex items-center justify-center ">
-          <Image width={200} height={200} src={logo} alt="company logo" />
+          {/* <Image width={200} height={200} src={logo} alt="company logo" /> */}
         </CardHeader>
         <CardContent className="flex-1">
           <AccordionTrigger className="">
@@ -72,6 +69,7 @@ function JobItem({
             <div>{location}</div>
             <span>-</span>
             <p>{type}</p>
+            <p>{apply_url}</p>
           </div>
 
           <AccordionContent>
@@ -94,16 +92,16 @@ function JobItem({
                 <Tooltip>
                   <TooltipTrigger>
                     <Button>
-                      <Link href={applyLink}>Apply</Link>
+                      <Link href={apply_url}>Apply</Link>
                     </Button>{" "}
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{applyLink}</p>
+                    <p>{apply_url}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="mt-5 text-sm ">Posted on {date} </div>
+            <div className="mt-5 text-sm ">Posted on {formatDate(date)} </div>
           </AccordionContent>
         </CardContent>
       </Card>

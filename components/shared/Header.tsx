@@ -2,7 +2,20 @@ import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { Briefcase } from "lucide-react";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 type Props = {};
 
 function Header({}: Props) {
@@ -58,7 +71,25 @@ function Header({}: Props) {
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <nav className="flex items-center gap-2">
             <Button variant="link"> Browse Jobs</Button>
-            <Button className="">Post a Job</Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button>Login</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <Link className="w-full" href="/login">
+                      As Startie
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/login  " className="w-full">
+                      As Company
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
         </div>
       </div>
