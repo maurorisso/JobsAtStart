@@ -26,7 +26,6 @@ function JobItem({
   title,
   company,
   location,
-  salary,
   type,
   date,
   description,
@@ -76,7 +75,7 @@ function JobItem({
 
         <div className="flex space-x-2 justify-between ">
           <div className="flex gap-2 justify-center items-center ">
-            {tags.map((tag) => (
+            {tags?.map((tag) => (
               <div
                 className="bg-slate-900 text-white text-sm px-2 py-1 rounded-md"
                 key={tag}
@@ -98,7 +97,7 @@ function JobItem({
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="mt-5 text-sm ">Posted on {formatDate(date)} </div>
+        <div className="mt-5 text-sm ">Posted on {formatDate(date ?? "")} </div>
       </AccordionContent>
     </div>
   );

@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import JobDialogTrigger from "./JobBoard/JobDialogTrigger";
+import JobDialogTrigger from "../shared/JobDialogTrigger";
 
 type Props = {};
 
@@ -22,11 +22,6 @@ function HeroSection({}: Props) {
         </p>
 
         <div className="flex gap-2">
-          {/* <Button variant={"outline"}>
-            <Link target="_blank" href="https://www.startglobal.org/">
-              About Start
-            </Link>
-          </Button> */}
           <div className="ml-5">
             Hiring?
             <span className="text-xl">🕵️</span>

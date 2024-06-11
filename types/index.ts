@@ -4,10 +4,10 @@ export type Job = {
   location: string;
   salary?: string;
   date?: string;
-  type: string
+  type: string;
   description: string;
   apply_url: string;
-  logo?: string; // This field can be a string or undefined
+  logo?: string;
   tags?: string[];
   sector: "Tech" | "Business" | "VC" | "Marketing" | "Sales" | "Other";
 };

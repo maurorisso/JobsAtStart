@@ -1,5 +1,5 @@
 import HeroSection from "@/components/Home/HeroSection";
-import BoardSection from "@/components/Home/JobBoard/BoardSection";
+import BoardSection from "@/components/JobBoard/BoardSection";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 

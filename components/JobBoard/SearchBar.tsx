@@ -1,14 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "../../ui/button";
-import { Input } from "../../ui/input";
+import { Input } from "../ui/input";
 import { PlusIcon } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import AddJobDialog from "./AddJobDialog";
-import { ToastAction } from "@/components/ui/toast";
-import { useToast } from "@/components/ui/use-toast";
-import JobDialogTrigger from "./JobDialogTrigger";
+
+import JobDialogTrigger from "../shared/JobDialogTrigger";
 
 type Props = {};
 

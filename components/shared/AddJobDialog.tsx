@@ -37,6 +37,7 @@ function AddJobDialog({ closeDialog }: Props) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [job, setJob] = useState<Job>({
     title: "",
+    date: "",
     company: "",
     location: "",
     salary: "",

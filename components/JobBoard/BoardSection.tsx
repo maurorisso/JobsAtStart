@@ -1,6 +1,5 @@
 import React from "react";
 import JobsList from "./JobsList";
-import Filters from "./Filters";
 import SearchBar from "./SearchBar";
 type Props = {};
 
@@ -21,7 +20,6 @@ async function BoardSection({}: Props) {
               w-full flex pt-5 
         "
         >
-          {/* <Filters /> */}
           <JobsList />
         </div>
       </div>
