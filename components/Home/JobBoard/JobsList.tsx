@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import JobItem from "./JobItem";
 import Vercel from "/public/vercel.svg";
 import { Accordion, AccordionItem } from "../../ui/accordion";
 import { fetchJobs } from "@/lib/supabase/actions";
+import { useJobStore } from "@/store/useJobStore";
 
 type Props = {};
 
-async function JobsList({}: Props) {
+const JobsList = async () => {
   const data = await fetchJobs();
   return (
     <Accordion
@@ -15,9 +16,12 @@ async function JobsList({}: Props) {
       className="flex flex-1 flex-col gap-5 w-full"
     >
       {data.map((job, idx) => (
-        <AccordionItem value={`value-${idx}`} className="w-full" key={job.id}>
+        <AccordionItem
+          value={`value-${idx}`}
+          className="w-full"
+          key={job.company}
+        >
           <JobItem
-            id={job.id}
             title={job.title}
             company={job.company}
             location={job.location}
@@ -32,9 +36,8 @@ async function JobsList({}: Props) {
           />
         </AccordionItem>
       ))}
-      <span id="board"></span>
     </Accordion>
   );
-}
+};
 
 export default JobsList;

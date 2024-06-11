@@ -6,7 +6,11 @@ export async function fetchJobs(): Promise<Job[]> {
   console.log("Attempting to fetch data from Supabase...");
 
   const supabase = createClient(); // Make sure this is correctly initializing Supabase.
-  const { data, error } = await supabase.from("job_listings").select("*");
+  // from recent created  to oldest
+  const { data, error } = await supabase
+    .from("job_listings")
+    .select("*")
+    .order("date", { ascending: false });
 
   if (error) {
     console.error("Error fetching data from Supabase:", error);

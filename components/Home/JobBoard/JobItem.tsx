@@ -43,7 +43,7 @@ function JobItem({
   }
 
   return (
-    <div className="flex p-5 flex-1 w-full flex-col   border border-slate-700  rounded-md">
+    <div className="flex p-5 flex-1 w-full flex-col   border border-slate-700  rounded-md  transition-opacity duration-700 ease-in opacity-100">
       <div className=" flex   gap-5 rounded-md p-0">
         <img
           width={100}
