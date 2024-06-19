@@ -12,6 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { HeaderDropdown } from "./HeaderDropdown";
+import Image from "next/image";
+import Thumbnail from "./Thumbnail";
 
 async function Header() {
   const supabase = createClient();
@@ -22,19 +24,16 @@ async function Header() {
 
   const { data } = await supabase
     .from("profiles")
-    .select(`first_name, last_name`)
+    .select(`first_name, last_name, avatar_url`)
     .eq("id", user?.id)
     .single();
 
-  const getInitals = () => {
-    if (!data) return;
+  const getInitals = (): string | null => {
+    if (!data) return null;
     const firstName = data?.first_name.toLowerCase();
     const lastName = data?.last_name.toLowerCase();
     return `${firstName[0]}${lastName[0]}`;
   };
-
-  const avatarSrc = `https://cdn.auth0.com/avatars/${getInitals()}.png`;
-  console.log(avatarSrc);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur bg-background/60">
@@ -51,13 +50,7 @@ async function Header() {
             <div className="relative">
               <DropdownMenu>
                 <DropdownMenuTrigger className="">
-                  <Avatar className="w-10 h-10">
-                    <AvatarImage src={avatarSrc} alt="avatar" />
-                    <AvatarFallback className="uppercase">
-                      {" "}
-                      {getInitals()}{" "}
-                    </AvatarFallback>
-                  </Avatar>
+                  <Thumbnail path={data?.avatar_url} initials={getInitals()} />
                 </DropdownMenuTrigger>
                 <HeaderDropdown />
               </DropdownMenu>

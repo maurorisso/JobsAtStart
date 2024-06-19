@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Check, Router } from "lucide-react";
 import { get } from "http";
 import { useRouter } from "next/navigation";
+import AccountAvatar from "./AccountAvatar";
 
 export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClient();
@@ -18,9 +19,7 @@ export default function AccountForm({ user }: { user: User | null }) {
   const [lastName, setLastName] = useState<string | null>(
     user?.user_metadata.first_name
   );
-  const [username, setUsername] = useState<string>(
-    user?.user_metadata.last_name
-  );
+
   const [linkedin, setLinkedin] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
   const { toast } = useToast();
@@ -105,7 +104,15 @@ export default function AccountForm({ user }: { user: User | null }) {
   }
 
   return (
-    <div className=" max-w-5xl m-auto my-10  flex flex-col gap-4">
+    <div className=" max-w-xl m-auto my-10  flex flex-col gap-4 ">
+      <AccountAvatar
+        uid={user?.id as string}
+        url={avatar_url}
+        labelText="Avatar"
+        onUpload={(url) => {
+          setAvatarUrl(url);
+        }}
+      />
       <div>
         <Label htmlFor="email">Email</Label>
         <Input id="email" type="email" value={user?.email || ""} disabled />
@@ -118,7 +125,7 @@ export default function AccountForm({ user }: { user: User | null }) {
           <Input
             id="first_name"
             type="text"
-            value={firstName}
+            value={firstName || ""}
             onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
@@ -129,22 +136,13 @@ export default function AccountForm({ user }: { user: User | null }) {
           <Input
             id="last_name"
             type="text"
-            value={lastName}
+            value={lastName || ""}
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
       </div>
 
       <div className="flex flex-col gap-2">
-        <div>
-          <Label htmlFor="avatar_url">Avatar URL</Label>
-          <Input
-            id="avatar_url"
-            type="text"
-            value={avatar_url || ""}
-            onChange={(e) => setAvatarUrl(e.target.value)}
-          />
-        </div>
         <div>
           <Label htmlFor="username">Linkedin</Label>
           <Input
@@ -170,7 +168,6 @@ export default function AccountForm({ user }: { user: User | null }) {
               updateProfile({
                 first_name: firstName,
                 last_name: lastName,
-                username,
                 linkedin,
                 avatar_url,
               })
