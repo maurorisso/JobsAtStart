@@ -1,8 +1,6 @@
-import React from "react";
-import Vercel from "/public/vercel.svg";
+"use client";
+import React, { useState } from "react";
 import Link from "next/link";
-
-import { HomeIcon, LapTimerIcon } from "@radix-ui/react-icons";
 
 import {
   Tooltip,
@@ -34,6 +32,8 @@ function JobItem({
   tags,
   sector,
 }: Job) {
+  const [imgSrc, setImgSrc] = useState(logo);
+
   function formatDate(dateString: string) {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(
@@ -48,16 +48,24 @@ function JobItem({
           width={100}
           height={200}
           className="object-contain rounded-md"
-          src={logo}
+          src={imgSrc}
           alt="company logo"
+          onError={() =>
+            setImgSrc(
+              "https://cdn.prod.website-files.com/5fb2dd371e5ff1a34480d61e/5fb3ec658130f4786779ac20_START_berlin_white.png"
+            )
+          }
         />
         <div className="flex-1">
           <AccordionTrigger className="">
             <div className="text-2xl">{title}</div>
           </AccordionTrigger>
 
-          <div className="flex  items-center gap-3">
-            <p className="text-xl">{company}</p>
+          <div className="flex  p-1 items-center gap-2">
+            <div className="flex items-center gap-1">
+              <span>💼</span>
+              <p className="text-xl">{company}</p>
+            </div>{" "}
             <div className="flex items-center gap-1">
               <span>📍</span>
               <div>{location}</div>

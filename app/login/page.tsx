@@ -1,52 +1,121 @@
 import { Button } from "@/components/ui/button";
-import { login, signup } from "./actions";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { login, signup } from "@/lib/supabase/actions";
 
 export default function LoginPage() {
   return (
-    <div className="w-full max-w-md bg-slate-800 m-auto p-8 rounded-lg">
-      <h1 className="text-3xl text-white text-center mb-6">
-        Log in or Sign Up
-      </h1>
-      <form className="flex flex-col space-y-4">
-        <div>
-          <label htmlFor="email" className="text-sm text-gray-300">
-            Email:
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            className="w-full p-2 rounded mt-1 text-gray-900"
-          />
-        </div>
-        <div>
-          <label htmlFor="password" className="text-sm text-gray-300">
-            Password:
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            className="w-full p-2 rounded mt-1 text-gray-900"
-          />
-        </div>
-        <div className="flex justify-between mt-4">
-          <Button
-            formAction={login}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Log In
-          </Button>
-          <Button
-            formAction={signup}
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Sign Up
-          </Button>
-        </div>
-      </form>
-    </div>
+    <main className="flex items-center justify-center h-screen ">
+      <Tabs defaultValue="login" className="w-[400px]">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="login">Login</TabsTrigger>
+          <TabsTrigger value="signup">Sign Up</TabsTrigger>
+        </TabsList>
+        <TabsContent value="login">
+          <form>
+            <Card>
+              <CardHeader>
+                <CardTitle>Login</CardTitle>
+                <CardDescription>
+                  Enter your credentials to log in.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <Label htmlFor="email">Email:</Label>
+                  <Input id="email" name="email" type="email" required />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="password">Password:</Label>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                  />
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button formAction={login} className="w-full">
+                  Login
+                </Button>
+              </CardFooter>
+            </Card>
+          </form>
+        </TabsContent>
+        <TabsContent value="signup">
+          <form>
+            <Card>
+              <CardHeader>
+                <CardTitle>Sign Up</CardTitle>
+                <CardDescription>
+                  Enter your information to create an account.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex gap-2">
+                  <div className="space-y-1">
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input
+                      id="firstName"
+                      name="firstName"
+                      placeholder="John"
+                      type="text"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="name">Last name</Label>
+                    <Input
+                      id="lastName"
+                      placeholder="Doe"
+                      name="lastName"
+                      type="lastName"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    placeholder="john.Doe@start-berlin.com"
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    placeholder="********"
+                    type="password"
+                    name="password"
+                    required
+                  />
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button formAction={signup} className="w-full">
+                  Sign Up
+                </Button>
+              </CardFooter>
+            </Card>
+          </form>
+        </TabsContent>
+      </Tabs>
+    </main>
   );
 }

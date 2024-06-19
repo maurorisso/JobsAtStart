@@ -13,7 +13,7 @@ import { set, z } from "zod";
 import { Job, Sector } from "@/types/index";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import FormItem from "./FormItem";
+import FormItem from "./FormItemJob";
 import {
   Select,
   SelectContent,
@@ -191,14 +191,6 @@ function AddJobDialog({ closeDialog }: Props) {
         </div>
 
         <FormItem
-          error={errors.description}
-          job={job}
-          handleChange={handleChange}
-          label="Job Description"
-          field="description"
-          placeholder="Enter job description"
-        />
-        <FormItem
           job={job}
           error={errors.apply_url}
           handleChange={handleChange}
@@ -223,6 +215,15 @@ function AddJobDialog({ closeDialog }: Props) {
           placeholder="Enter comma-separated tags"
         />
 
+        <FormItem
+          error={errors.description}
+          job={job}
+          type="textarea"
+          handleChange={handleChange}
+          label="Job Description"
+          field="description"
+          placeholder="Enter job description"
+        />
         <div>
           <div className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize mb-1">
             Sector
@@ -248,7 +249,8 @@ function AddJobDialog({ closeDialog }: Props) {
           </Select>
         </div>
 
-        <DialogFooter>
+        <div></div>
+        <DialogFooter className="flex justify-end">
           <Button type="submit">Save Job</Button>
         </DialogFooter>
       </form>

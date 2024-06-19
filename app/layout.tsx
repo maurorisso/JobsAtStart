@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ComponentProvider";
 import Header from "@/components/shared/Header";
 import { Toaster } from "@/components/ui/toaster";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       {" "}
+      <head>
+        <link
+          rel="icon"
+          href="https://cdn.prod.website-files.com/5fb2dd371e5ff1a34480d61e/660d7ba849081103918caf03_favicon-32x32.png"
+        />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
