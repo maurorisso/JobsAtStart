@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { PlusIcon } from "lucide-react";
 import React, { useState } from "react";
-import AddJobDialog from "./AddJobDialog";
+import AddJobDialog from "../JobBoard/AddJobDialog";
 
 type Props = {
   icon: React.ReactNode;

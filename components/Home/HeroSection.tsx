@@ -8,10 +8,18 @@ import Link from "next/link";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import JobDialogTrigger from "../shared/JobDialogTrigger";
+import { createClient } from "@/lib/supabase/server";
+import { link } from "fs";
+import RedirectButton from "./RedirectButton";
 
 type Props = {};
 
-function HeroSection({}: Props) {
+async function HeroSection({}: Props) {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   return (
     <div className="flex  justify-around items-center  p-10 flex-1  ">
       <div className="flex flex-col justify-center items-start gap-4 w-2/6 ">
@@ -25,11 +33,15 @@ function HeroSection({}: Props) {
           <div className="ml-5">
             Hiring?
             <span className="text-xl">🕵️</span>
-            <JobDialogTrigger
-              isHeroSection={true}
-              triggerName="Post a Job"
-              icon={<ArrowRight size={16} />}
-            />
+            {user ? (
+              <JobDialogTrigger
+                isHeroSection={true}
+                triggerName="Post a Job"
+                icon={<ArrowRight size={16} />}
+              />
+            ) : (
+              <RedirectButton />
+            )}
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ type Props = {};
 
 const JobsList = async () => {
   const data = await fetchJobs();
+
   return (
     <Accordion
       type="single"
@@ -25,9 +26,12 @@ const JobsList = async () => {
             title={job.title}
             company={job.company}
             location={job.location}
+            id={job.id}
             type={job.type}
             logo={job.logo}
             tags={job.tags}
+            created_by={job.created_by}
+            apply_email={job.apply_email}
             apply_url={job.apply_url}
             date={job.date}
             description={job.description}

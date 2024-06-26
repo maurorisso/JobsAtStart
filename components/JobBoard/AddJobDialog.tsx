@@ -1,6 +1,6 @@
 "use client";
 import { Check } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DialogContent,
   DialogDescription,
@@ -13,7 +13,7 @@ import { set, z } from "zod";
 import { Job, Sector } from "@/types/index";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import FormItem from "./FormItemJob";
+import FormItem from "../shared/FormItemJob";
 import {
   Select,
   SelectContent,
@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/select";
 import { addJob } from "@/app/api";
 import { useToast } from "@/components/ui/use-toast";
+import { createClient } from "@/lib/supabase/client";
+import { create } from "domain";
 
 type Props = {
   closeDialog: () => void;
@@ -34,13 +36,34 @@ function AddJobDialog({ closeDialog }: Props) {
   const router = useRouter();
   const { toast } = useToast();
 
+  useEffect(() => {
+    const fetchId = async () => {
+      const supabase = createClient();
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+      if (error) {
+        console.error("Error getting user:", error.message);
+        return;
+      }
+      setUserId(user?.id);
+      // Update job state with the new userId
+      setJob((prevJob) => ({ ...prevJob, created_by: user?.id }));
+    };
+    fetchId();
+  }, []);
+
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [userId, setUserId] = useState<string | undefined>("");
   const [job, setJob] = useState<Job>({
     title: "",
     date: "",
     company: "",
+    apply_email: "",
     location: "",
     salary: "",
+    created_by: userId,
     type: "Full-time",
     description: "",
     apply_url: "",
@@ -72,6 +95,8 @@ function AddJobDialog({ closeDialog }: Props) {
     apply_url: z.string().url("Must be a valid URL"),
     logo: z.string().url("Must be a valid URL").optional(),
     tags: z.array(z.string()).optional(),
+    apply_email: z.string().email().optional(),
+    created_by: z.string(),
     sector: z.enum(["Tech", "Business", "VC", "Marketing", "Sales", "Other"]),
   });
 
@@ -82,12 +107,15 @@ function AddJobDialog({ closeDialog }: Props) {
       const jobData = FormSchema.parse(job);
       await addJob(jobData);
       router.refresh();
+
       closeDialog(); // Close the dialog on successful submission
       setJob({
         title: "",
         company: "",
         location: "",
+        apply_email: "",
         salary: "",
+        created_by: userId,
         type: "Full-time",
         description: "",
         apply_url: "",
@@ -123,22 +151,21 @@ function AddJobDialog({ closeDialog }: Props) {
   };
 
   return (
-    <DialogContent className="max-w-5xl">
+    <DialogContent className="max-w-[100rem] p-10 ">
+      <DialogHeader>
+        <DialogTitle>Add a New Job</DialogTitle>
+        <DialogDescription>
+          Fill in the form below to add a new job to the job board.
+        </DialogDescription>
+      </DialogHeader>
       <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-5 mt-10">
-        <DialogHeader>
-          <DialogTitle>Add a New Job</DialogTitle>
-          <DialogDescription>
-            Fill in the form below to add a new job to the job board.
-          </DialogDescription>
-        </DialogHeader>
-
         <FormItem
           job={job}
           error={errors.title}
           handleChange={handleChange}
           label="Job Title"
           field="title"
-          placeholder="Enter the job title"
+          placeholder=" Business Analyst"
         />
         <FormItem
           error={errors.company}
@@ -146,7 +173,7 @@ function AddJobDialog({ closeDialog }: Props) {
           handleChange={handleChange}
           label="Company Name"
           field="company"
-          placeholder="Enter the company name"
+          placeholder="Example Inc."
         />
         <FormItem
           job={job}
@@ -154,7 +181,7 @@ function AddJobDialog({ closeDialog }: Props) {
           handleChange={handleChange}
           label="Location"
           field="location"
-          placeholder="Enter the location"
+          placeholder="Berlin, Germany | Remote.."
         />
 
         <div>
@@ -190,14 +217,7 @@ function AddJobDialog({ closeDialog }: Props) {
           </Select>
         </div>
 
-        <FormItem
-          job={job}
-          error={errors.apply_url}
-          handleChange={handleChange}
-          label="Apply URL"
-          field="apply_url"
-          placeholder="http://example.com/apply"
-        />
+        <div>Current ID {userId}</div>
         <FormItem
           job={job}
           error={errors.logo}
@@ -207,23 +227,7 @@ function AddJobDialog({ closeDialog }: Props) {
           placeholder="http://example.com/logo.png"
           isRequired={false}
         />
-        <FormItem
-          job={job}
-          handleChange={handleChange}
-          label="Tags"
-          field="tags"
-          placeholder="Enter comma-separated tags"
-        />
 
-        <FormItem
-          error={errors.description}
-          job={job}
-          type="textarea"
-          handleChange={handleChange}
-          label="Job Description"
-          field="description"
-          placeholder="Enter job description"
-        />
         <div>
           <div className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize mb-1">
             Sector
@@ -248,8 +252,41 @@ function AddJobDialog({ closeDialog }: Props) {
             </SelectContent>
           </Select>
         </div>
+        <div className="flex  w-full justify-center items-center gap-2">
+          <FormItem
+            job={job}
+            className="flex-grow"
+            error={errors.apply_url}
+            handleChange={handleChange}
+            label="Apply URL"
+            field="apply_url"
+            placeholder="http://example.com/apply"
+          />
+          <span className=" text-center">-or-</span>
+          <FormItem
+            job={job}
+            className="flex-grow"
+            error={errors.apply_email}
+            handleChange={handleChange}
+            label="Email"
+            field="apply_email"
+            placeholder="careers@example.com"
+            isRequired={false}
+          />
+        </div>
 
-        <div></div>
+        <FormItem
+          error={errors.description}
+          job={job}
+          type="textarea"
+          handleChange={handleChange}
+          label="Job Description"
+          field="description"
+          placeholder="
+         We are looking for a talented Business Analyst to join our team and help drive our business forward. The ideal candidate will have a keen analytical mind and a strong understanding of..
+          "
+        />
+        <span></span>
         <DialogFooter className="flex justify-end">
           <Button type="submit">Save Job</Button>
         </DialogFooter>

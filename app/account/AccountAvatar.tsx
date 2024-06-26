@@ -75,7 +75,7 @@ export default function AccountAvatar({
   };
 
   return (
-    <div className="w-full flex  gap-16 items-center ">
+    <div className="w-full flex  gap-16 items-center justify-between ">
       <div>
         <Label htmlFor="single">
           {uploading ? "Uploading ..." : `Upload a ${labelText} `}
